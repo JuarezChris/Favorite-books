@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'book_app/css/book_style.css' %}">
+    <title>Book Info</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <h1>welcome, {{request.session.user_first}}</h1>
+    <a href="/fav_book">Go Back</a>
+    <a href="/log_out">Log out</a> <br>
+    <div id='book_info'>
+        <h1>{{book_info.title}}</h1>
+        <h2>Added By:{{book_info.user.first_name}} {{book_info.user.last_name}}</h2>
+        <h2>Added on: {{book_info.created_at}}</h2>
+        <h2>Last Updated at:</h2>
+        <form action="/update/{{book_info.id}}" method="POST">
+            {% csrf_token %}
+            <h2>Description</h2><textarea name="description" rows="" cols="">{{book_info.description}}</textarea>
+            <br><br>
+            {% if book_info.user.id == request.session.user_id %}
+                <button type="submit" class="btn btn-primary">Update</button>
+            {% endif %}
+        </form>
+        <br>
+        <form action='/delete_book' method='post'> 
+            {% csrf_token %}
+            {% if book_info.user.id == request.session.user_id %}
+                <button type="submit" class="btn btn-primary">Delete</button>
+            {% endif %}
+            
+        </form>
+    </div>
+    <div id='user_list'>
+        <h1>Users who like this book!</h1>
+        {% for l in liked_books%}
+            <ul>
+                <li>{{l.first_name}}</li>
+            </ul>
+            <form action="/unfav/{{book_info.id}}" method="post">
+                {% csrf_token %}
+            {% if book_info.user.id == request.session.user_id %}
+            <button type="submit" class="btn btn-primary">Un-Fav</button>
+            {% endif %}
+            </form>
+        {% endfor %}
+    </div>
+</body>
+</html>

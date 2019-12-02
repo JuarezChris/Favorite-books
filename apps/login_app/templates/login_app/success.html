@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<style>
+    * {
+        vertical-align: top;
+        font-family: sans-serif;
+    }
+    body{
+        padding:20px;
+    }
+
+</style>
+
+<body>
+<h1>Success! Welcome, {{ request.session.user_first }}!</h1>
+
+Successfully registered (or logged in!) <br> <button onclick="window.location.href = '/clear';">Log Out</button> <br>
+
+</body>
+
+</html>
